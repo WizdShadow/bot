@@ -21,6 +21,7 @@ class Film(BaseModel):
     year = CharField()
     genre = CharField()
     age_rating = CharField()
+    poster_url = CharField()
     user_id = CharField()
     
 def info_check(id_user):
@@ -47,7 +48,7 @@ def info_check2(id_user,name_film):
     user = User.select(User.id).where(User.user_name == id_user).first()
     
         
-    films = Film.select(Film.name, Film.description, Film.rating, Film.year, Film.genre, Film.age_rating).where(Film.user_id == user, Film.name == name_film)    
+    films = Film.select(Film.name, Film.description, Film.rating, Film.year, Film.genre, Film.age_rating, Film.poster_url).where(Film.user_id == user, Film.name == name_film)    
 
     
     
@@ -57,8 +58,9 @@ def info_check2(id_user,name_film):
             Год: {films[0].year}
             Жанр: {films[0].genre}
             Возрастной рейтинг: {films[0].age_rating}"""
+    photo = films[0].poster_url
     db.close()
-    return text
+    return text, photo
         
         
         

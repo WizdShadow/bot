@@ -11,13 +11,13 @@ class User(Model):
         database = db
 
 class Film(Model):
-    name = CharField()
-    description = CharField()
-    rating = CharField()
-    year = CharField()
-    genre = CharField()
-    age_rating = CharField()
-    poster_url = CharField()
+    name = CharField(null=True, default='Название отсутствует')
+    description = CharField(null=True, default='Описание отсутствует')
+    rating = CharField(null=True, default='Рейтинг отсутствует')
+    year = CharField(null=True, default='Год отсутствует')
+    genre = CharField(null=True, default='Жанр отсутствует')
+    age_rating = CharField(null=True, default='Возрастной рейтинг отсутствует')
+    poster_url = CharField(null=True, default='Постер отсутствует')
     user = ForeignKeyField(User, backref='films')  # Связь с таблицей Users
 
     class Meta:
@@ -44,13 +44,13 @@ def add_film(name, description, rating, year, genre, age_rating, poster_url, use
     
     # Добавляем новый фильм
     Film.create(
-        name=name,
-        description=description,
-        rating=rating,
-        year=year,
-        genre=genre,
-        age_rating=age_rating,
-        poster_url=poster_url,
+        name=name or 'Название отсутствует',
+        description=description or 'Описание отсутствует',
+        rating=rating or 'Рэтинг отсутствует',
+        year=year or 'Год отсутствует',
+        genre=genre or 'Жанр отсутствует',
+        age_rating=age_rating or 'Возрастной рейтинг отсутствует',
+        poster_url=poster_url or 'Постер отсутствует',
         user=user
     )
     print(f"Фильм '{name}' успешно добавлен.")

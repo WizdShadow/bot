@@ -1,4 +1,4 @@
-# E:\project\бот\commands\movie_search.py
+
 import telebot
 import api
 
@@ -11,42 +11,31 @@ from KeyboardButton.KeyboardButton import create_buttons  # Импортируе
 
 
 
-@bot.message_handler(commands=['movie_search'])
+@bot.message_handler(commands=['movie_by_rating'])
 def start(message):
-    
-    bot.send_message(message.chat.id, 'Введите название фильма', reply_markup=telebot.types.ReplyKeyboardRemove())
-    
-    bot.register_next_step_handler(message, get_movie_name)
-
-
-def get_movie_name(message):
-    if message.text == 'отмена':
-        bot.send_message(message.chat.id, "Вы отменили поиск, ожидаю другую команду", reply_markup=telebot.types.ReplyKeyboardRemove())
-        return 
-    name_film = message.text
     markup = create_buttons(5)
     bot.send_message(message.chat.id, 'Введите лимит вывода за страницу от 1 до 5:', reply_markup=markup)
-    bot.register_next_step_handler(message, get_limit, name_film)
+    bot.register_next_step_handler(message, get_limit)
 
 
-def get_limit(message, name_film):
+def get_limit(message,):
     
     try:
         limit_film = int(message.text)
         if 1 <= limit_film <= 5:
             bot.send_message(message.chat.id, 'Начал поиск, ожидайте...')
             page = 1
-            show_movies(message.chat.id, name_film, limit_film, page)
+            show_movies(message.chat.id,limit_film, page)
         else:
             bot.send_message(message.chat.id, 'Лимит не может быть меньше 1 или больше 5. Попробуйте снова:')
-            bot.register_next_step_handler(message, get_limit, name_film)
+            bot.register_next_step_handler(message, get_limit)
     except ValueError:
         bot.send_message(message.chat.id, 'Пожалуйста, введите корректное число.')
-        bot.register_next_step_handler(message, get_limit, name_film)
+        bot.register_next_step_handler(message, get_limit)
 
 
-def show_movies(chat_id, name_film, limit_film, page):
-    data = api.ter(name_film, limit_film, page)
+def show_movies(chat_id,limit_film, page):
+    data = api.ter2(limit_film, page)
     
     film = {}
     films_message = []
@@ -85,14 +74,14 @@ def show_movies(chat_id, name_film, limit_film, page):
             bot.send_message(chat_id, f"Произошла ошибка при отправке медиа: {e}")
 
     bot.send_message(chat_id, "Укажите номер фильма из списка, который хотите увидеть, или напишите 'еще' для следующей страницы.")
-    bot.register_next_step_handler_by_chat_id(chat_id, process_user_choice, film, name_film, limit_film, page)
+    bot.register_next_step_handler_by_chat_id(chat_id, process_user_choice, film,limit_film, page)
 
 
-def process_user_choice(message, film, name_film, limit_film, page):
+def process_user_choice(message, film,limit_film, page):
     text = message.text.strip()
     if text.lower() == 'еще':
         page += 1
-        show_movies(message.chat.id, name_film, limit_film, page)
+        show_movies(message.chat.id,limit_film, page)
     elif text.isdigit() and 1 <= int(text) <= len(film):
         keys = list(film.keys())
         selected_key = keys[int(text) - 1]
@@ -133,7 +122,7 @@ def process_user_choice(message, film, name_film, limit_film, page):
         
     else:
         bot.send_message(message.chat.id, 'Некорректный выбор. Попробуйте снова.')
-        bot.register_next_step_handler(message, process_user_choice, film, name_film, limit_film, page)
+        bot.register_next_step_handler(message, process_user_choice, film,limit_film, page)
 
 
 
