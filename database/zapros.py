@@ -1,28 +1,5 @@
 from peewee import SqliteDatabase, Model, CharField, IntegerField
-
-# Подключение к базе данных SQLite
-db = SqliteDatabase('my_database.db')
-
-# Базовая модель
-class BaseModel(Model):
-    class Meta:
-        database = db
-
-# Модель User
-class User(BaseModel):
-    user_name = CharField()
-    id = IntegerField(primary_key=True)  
-    
-class Film(BaseModel):
-    id = IntegerField(primary_key=True)
-    name = CharField()
-    description = CharField()
-    rating = CharField()
-    year = CharField()
-    genre = CharField()
-    age_rating = CharField()
-    poster_url = CharField()
-    user_id = CharField()
+from .models import User, Film, db
     
 def info_check(id_user):
 

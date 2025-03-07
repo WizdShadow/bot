@@ -1,6 +1,6 @@
 from bot import bot
 import commands
-import database
+from database.models import db, User, Film
 import telebot
 from telebot.types import BotCommand
 
@@ -17,5 +17,7 @@ bot.set_my_commands(commands)
 
 
 if __name__ == '__main__':
+    db.connect()
+    db.create_tables([User, Film], )
     print("Бот запущен...")
     bot.polling(none_stop=True)

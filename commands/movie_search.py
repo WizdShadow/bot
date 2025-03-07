@@ -1,6 +1,7 @@
 # E:\project\бот\commands\movie_search.py
 import telebot
-import api
+from api.apii import ter
+from api.im_down import down_im
 
 from database import addfilm
 from commands import history
@@ -46,7 +47,7 @@ def get_limit(message, name_film):
 
 
 def show_movies(chat_id, name_film, limit_film, page):
-    data = api.ter(name_film, limit_film, page)
+    data = ter(name_film, limit_film, page)
     
     film = {}
     films_message = []
@@ -65,8 +66,15 @@ def show_movies(chat_id, name_film, limit_film, page):
                             'age_rating': age_rating,
                             'poster_url': poster_url}
         films_message.append(unique_key)
-        if poster_url:
-            media_group.append(telebot.types.InputMediaPhoto(poster_url))
+        if not poster_url:
+            with open("file/no_poster.png", "rb") as file:
+                data = file.read()
+                media_group.append(telebot.types.InputMediaPhoto(data))
+                film[unique_key][poster_url] = data
+        else:
+            data = down_im(poster_url)
+            media_group.append(telebot.types.InputMediaPhoto(data))
+            film[unique_key][poster_url] = data
         count += 1
 
     keys_message = "\n".join(films_message)
