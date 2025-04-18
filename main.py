@@ -19,5 +19,6 @@ bot.set_my_commands(commands)
 if __name__ == '__main__':
     db.connect()
     db.create_tables([User, Film], )
+    db.close()
     print("Бот запущен...")
     bot.polling(none_stop=True)

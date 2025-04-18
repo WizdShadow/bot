@@ -21,7 +21,7 @@ def start(message):
 
 
 def get_movie_name(message):
-    if message.text == 'отмена':
+    if message.text == 'отмена' or message.text == "Отмена":
         bot.send_message(message.chat.id, "Вы отменили поиск, ожидаю другую команду", reply_markup=telebot.types.ReplyKeyboardRemove())
         return 
     name_film = message.text
@@ -33,6 +33,9 @@ def get_movie_name(message):
 def get_limit(message, name_film):
     
     try:
+        if message.text == 'отмена' or message.text == "Отмена":
+            bot.send_message(message.chat.id, "Вы отменили поиск, ожидаю другую команду", reply_markup=telebot.types.ReplyKeyboardRemove())
+            return 
         limit_film = int(message.text)
         if 1 <= limit_film <= 5:
             bot.send_message(message.chat.id, 'Начал поиск, ожидайте...')
@@ -138,7 +141,9 @@ def process_user_choice(message, film, name_film, limit_film, page):
             
         else:
             bot.send_message(message.chat.id, details_message)
-        
+    elif message.text == 'отмена' or message.text == "Отмена":
+        bot.send_message(message.chat.id, "Вы отменили поиск, ожидаю другую команду", reply_markup=telebot.types.ReplyKeyboardRemove())
+        return 
     else:
         bot.send_message(message.chat.id, 'Некорректный выбор. Попробуйте снова.')
         bot.register_next_step_handler(message, process_user_choice, film, name_film, limit_film, page)
