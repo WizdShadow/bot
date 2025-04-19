@@ -9,8 +9,10 @@ from telebot.types import BotCommand
 commands = [
     BotCommand('start', 'Запуск бота'),
     BotCommand('movie_search', 'Поиск фильмов по названию'),
-    BotCommand('history', 'История запросов'),
     BotCommand('movie_by_rating', 'Поиск фильмов по рейтингу'),
+    BotCommand('low_budget_movie', 'Поиск фильмов низкого бюджета'),
+    BotCommand('high_budget_movie', 'Поиск фильмов высокого бюджета'),
+    BotCommand('history', 'История запросов'),
 ]
 bot.set_my_commands(commands)
 

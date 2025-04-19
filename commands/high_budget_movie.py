@@ -1,6 +1,6 @@
 
 import telebot
-from api.apii import ter2
+from api.apii import get_high_budget_movie
 from api.im_down import down_im
 
 from database import addfilm
@@ -12,7 +12,7 @@ from KeyboardButton.KeyboardButton import create_buttons  # Импортируе
 
 
 
-@bot.message_handler(commands=['movie_by_rating'])
+@bot.message_handler(commands=['high_budget_movie'])
 def start(message):
     markup = create_buttons(5)
     bot.send_message(message.chat.id, 'Введите лимит вывода за страницу от 1 до 5:', reply_markup=markup)
@@ -39,7 +39,7 @@ def get_limit(message,):
 
 
 def show_movies(chat_id,limit_film, page):
-    data = ter2(limit_film, page)
+    data = get_high_budget_movie(limit_film, page)
     
     film = {}
     films_message = []
