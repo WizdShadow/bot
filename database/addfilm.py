@@ -20,7 +20,7 @@ def add_film(name, description, rating, year, genre, age_rating, poster_url, use
     Film.create(
         name=name or 'Название отсутствует',
         description=description or 'Описание отсутствует',
-        rating=rating or 'Рэтинг отсутствует',
+        rating=rating or 'Рэйтинг отсутствует',
         year=year or 'Год отсутствует',
         genre=genre or 'Жанр отсутствует',
         age_rating=age_rating or 'Возрастной рейтинг отсутствует',

@@ -1,3 +1,4 @@
 import telebot
+import os
 
-bot = telebot.TeleBot('7374053509:AAGxeocTsFgLQyAKivNCuvRsUGW7rR20kEA')
+bot = telebot.TeleBot(os.getenv("token_telegram"))

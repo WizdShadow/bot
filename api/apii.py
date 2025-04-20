@@ -1,8 +1,10 @@
 #api.py
 import requests as rq
+import os
+
 def ter(name,limit,page):
-    
-    token_cite = "WQCHH9E-5CW440P-Q4X9VMD-32T4C9P"
+    os.getenv("token")
+    token_cite = os.getenv("token_api")
     URL = 'https://api.kinopoisk.dev/v1.4/movie/search'
 
     name = name
@@ -27,7 +29,7 @@ def ter(name,limit,page):
 
 def ter2(limit,page):
     
-    token_cite = "WQCHH9E-5CW440P-Q4X9VMD-32T4C9P"
+    token_cite = os.getenv("token_api")
     URL = 'https://api.kinopoisk.dev/v1.4/movie'
 
     
@@ -53,7 +55,7 @@ def ter2(limit,page):
 
 def get_low_budget_movie(limit,page):
     
-    token_cite = "WQCHH9E-5CW440P-Q4X9VMD-32T4C9P"
+    token_cite = os.getenv("token_api")
     URL = 'https://api.kinopoisk.dev/v1.4/movie'
 
     
@@ -79,7 +81,7 @@ def get_low_budget_movie(limit,page):
 
 def get_high_budget_movie(limit,page):
     
-    token_cite = "WQCHH9E-5CW440P-Q4X9VMD-32T4C9P"
+    token_cite = os.getenv("token_api")
     URL = 'https://api.kinopoisk.dev/v1.4/movie'
 
     
